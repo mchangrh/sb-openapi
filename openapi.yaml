@@ -340,6 +340,8 @@ paths:
               - vip
               - lastSegmentID
             type: array
+            items:
+              type: string
           in: query
           name: value
           description: Values to get from userInfo
@@ -407,7 +409,7 @@ paths:
         - normal
         - admin
       security:
-        - userID: []
+        - privateUserID: []
       parameters:
         - schema:
             type: string
@@ -472,6 +474,9 @@ paths:
             type: array
             minItems: 1
             maxItems: 10
+            uniqueItems: true
+            items:
+              type: string
           in: query
           name: UUIDs
           description: Array of UUID
@@ -746,7 +751,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/searchSegment'
+                $ref: '#/components/schemas/statusResponse'
         '404':
           description: Not Found
       operationId: getStatus
@@ -769,19 +774,23 @@ paths:
                     type: array
                     items:
                       type: string
+                    maxItems: 100
                   viewCounts:
                     type: array
                     items:
                       type: integer
+                    maxItems: 100
                   totalSubmissions:
                     type: array
                     items:
                       type: integer
+                    maxItems: 100
                   minutesSaved:
                     type: array
                     items:
                       type: number
                       format: float
+                    maxItems: 100
         '400':
           description: Bad Request
       operationId: getTopUsers
@@ -1103,6 +1112,7 @@ components:
       pattern: '^[0-9A-Za-z_-]{11}$'
       description: ID of video
       example: dQw4w9WgXcQ
+      maxLength: 11
     videoDuration:
       type: number
       title: videoDuration
@@ -1114,6 +1124,7 @@ components:
       description: Full hash of videoID
       pattern: '^[a-f0-9]{64}$'
       example: 5f6b0b4e201f2a7e66927abb5cadeec81624dcc8efe6644b78aa182213f653a2
+      maxLength: 64
     videoLock:
       title: videoLocks
       type: object
@@ -1248,11 +1259,13 @@ components:
         uptime:
           type: integer
           description: Uptime in seconds
+          format: float
         commit:
           description: ''
           oneOf:
             - description: Full SHA hash of latest git commit
               example: ca479bc2f70f6b38d86254fdab7af6e1b5f9c150
+              pattern: '^[0-9a-f]{40}$'
             - description: testing mode
               enum:
                 - development
@@ -1268,10 +1281,12 @@ components:
           type: integer
           example: 1564088876715
           description: Unix (ms) time that request was recieved
+          format: float
         processTime:
           type: integer
           description: ms between startTime and sending response
           example: 1
+          format: float
   securitySchemes:
     privateUserID:
       name: userID
@@ -1328,6 +1343,8 @@ components:
           - music_offtopic
           - poi_highlight
         uniqueItems: true
+        items:
+          type: string
       style: spaceDelimited
       description: 'Array of categories - See https://github.com/ajayyy/SponsorBlock/wiki/Types#category'
     actionType:
@@ -1350,6 +1367,9 @@ components:
           - mute
         uniqueItems: true
         minItems: 1
+        items:
+          type: string
+        maxItems: 2
       style: spaceDelimited
       description: 'multiple action types - Options are skip, mute'
     requiredSegment:
@@ -1369,6 +1389,8 @@ components:
         type: array
         minItems: 1
         uniqueItems: true
+        items:
+          type: string
       description: Segment UUIDs to get regardless
     service:
       name: service
@@ -1386,6 +1408,7 @@ components:
       schema:
         type: string
         pattern: '^[a-f0-9]{64,65}$'
+        maxLength: 65
       description: UUID of target segment
       required: true
     sha256HashPrefix:
@@ -1406,6 +1429,7 @@ components:
         type: string
         format: publicUserID
         pattern: '^[a-f0-9]{64}$'
+        maxLength: 64
       description: Public userID of target
   responses: {}
   examples: {}
