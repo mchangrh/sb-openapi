@@ -122,7 +122,8 @@ paths:
         '429':
           description: Too Many Requests
       description: Create a segment on a video
-      security: []
+      security:
+        - privateUserID: []
       parameters:
         - $ref: '#/components/parameters/requiredVideoID'
         - schema:
@@ -239,7 +240,8 @@ paths:
           name: type
           description: 'Vote type - 0 for downvote, 1 for upvote, 20 to undo vote'
         - $ref: '#/components/parameters/category'
-      security: []
+      security:
+        - privateUserID: []
       tags:
         - normal
   /viewedVideoSponsorTime:
@@ -259,7 +261,7 @@ paths:
         - nouserid
   /userInfo:
     get:
-      summary: get User Info
+      summary: Get User Info
       tags:
         - nouserid
         - stats
@@ -345,7 +347,7 @@ paths:
       description: Get information for a user or yourself
   /getViewsForUser:
     get:
-      summary: get Views for user
+      summary: Get Views for user
       tags:
         - stats
         - normal
