@@ -1394,6 +1394,9 @@ components:
       required: true
       schema:
         type: string
+        minLength: 4
+        maxLength: 32
+        pattern: '[\da-f]'
       description: First 4-32 characters of the has of the YouTube videoID
     publicUserID:
       name: userID
