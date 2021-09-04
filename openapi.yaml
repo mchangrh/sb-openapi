@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: SponsorBlock API
-  version: '1.0.1'
+  version: 1.0.1
   description: OpenAPI documentation of SponsorBlock API
   license:
     name: GPL v3.0
@@ -1310,7 +1310,7 @@ components:
           - music_offtopic
         default: sponsor
         type: string
-      description: Segment Category
+      description: 'Segment Category - See https://github.com/ajayyy/SponsorBlock/wiki/Types#category'
     categories:
       name: categories
       in: query
@@ -1329,7 +1329,7 @@ components:
           - poi_highlight
         uniqueItems: true
       style: spaceDelimited
-      description: Array of categories
+      description: 'Array of categories - See https://github.com/ajayyy/SponsorBlock/wiki/Types#category'
     actionType:
       name: actionType
       in: query
@@ -1351,7 +1351,7 @@ components:
         uniqueItems: true
         minItems: 1
       style: spaceDelimited
-      description: multiple action types
+      description: 'multiple action types - Options are skip, mute'
     requiredSegment:
       name: requiredSegment
       in: query
