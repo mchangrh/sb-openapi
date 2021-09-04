@@ -2,11 +2,10 @@ openapi: 3.0.0
 info:
   title: SponsorBlock API
   version: '1.0'
-  summary: SponsorBlock API
   description: OpenAPI documentation of SponsorBlock API
   license:
     name: GPL v3.0
-    identifier: GPL-3.0-only
+    url: 'https://www.gnu.org/licenses/gpl-3.0.en.html'
   contact:
     name: Michael Chang
     url: 'https://github.com/mchangrh'
@@ -154,10 +153,12 @@ paths:
                   type: number
                   format: float
                   description: start time of segment
+                  example: 1
                 endTime:
                   type: number
                   format: float
                   description: end time of segment
+                  example: 3
                 service:
                   $ref: '#/components/schemas/services'
                 videoDuration:
@@ -174,6 +175,7 @@ paths:
                 - startTime
                 - endTime
                 - segments
+            examples: {}
         description: Alternative Submission format
       tags:
         - normal
@@ -808,7 +810,8 @@ paths:
                       - type: integer
                         properties: {}
                         description: Only if countContributingUsers was true
-                      - type: 'null'
+                      - type: string
+                        nullable: true
                         properties: {}
                     description: ''
                   activeUsers:
@@ -992,13 +995,6 @@ components:
     skipSegment:
       type: object
       title: skipSegment
-      examples:
-        - - segment:
-              - 363.90582
-              - 370.79547
-            UUID: 07bb5fb8cfb9d819dad4fe38fe9c51a7f3b6d6aebf36054bfffa75c8019eb57f
-            category: outro
-            videoDuration: 0
       properties:
         segment:
           type: array
@@ -1006,7 +1002,8 @@ components:
           minItems: 2
           description: start and end time in seconds
           items:
-            type: integer
+            type: number
+            format: float
         UUID:
           $ref: '#/components/schemas/segmentUUID'
         category:
@@ -1019,10 +1016,6 @@ components:
       type: string
       title: segmentUUID
       pattern: '^[a-f0-9]{64,65}$'
-      examples:
-        - string
-      format: segmentUUID
-      description: UUID of segment
       example: 07bb5fb8cfb9d819dad4fe38fe9c51a7f3b6d6aebf36054bfffa75c8019eb57f
     publicUserID:
       type: string
@@ -1051,16 +1044,6 @@ components:
       description: Privacy preserving skip segments
       minItems: 1
       uniqueItems: true
-      examples:
-        - - videoID: V9_PjdU3Mpo
-            hash: af01cd59f8994c4ee9f53102953c91532494dd385f30eedb5c8453f438acd885
-            segments:
-              - segment:
-                  - 363.90582
-                  - 370.79547
-                UUID: 07bb5fb8cfb9d819dad4fe38fe9c51a7f3b6d6aebf36054bfffa75c8019eb57f
-                category: outro
-                videoDuration: 0
       items:
         type: object
         additionalProperties: false
@@ -1078,18 +1061,11 @@ components:
         - YouTube
       default: YouTube
       description: Supported services
-      examples: []
       example: YouTube
     submitSegment:
       title: submitSegment
       type: object
       description: Object of segment to submit
-      examples:
-        - segment:
-            - 3
-            - 10
-          category: sponsor
-          actionType: skip
       properties:
         segment:
           type: array
@@ -1120,6 +1096,7 @@ components:
       title: videoID
       pattern: '^[0-9A-Za-z_-]{11}$'
       description: ID of video
+      example: dQw4w9WgXcQ
     videoDuration:
       type: number
       title: videoDuration
@@ -1344,7 +1321,6 @@ components:
           - preview
           - music_offtopic
           - poi_highlight
-        behavior: Read/Write
         uniqueItems: true
       style: spaceDelimited
       description: Array of categories
@@ -1376,7 +1352,8 @@ components:
       required: false
       schema:
         type: string
-        pattern: '^([a-f0-9]{64,65}$'
+        pattern: '^[a-f0-9]{64,65}$'
+        example: 07bb5fb8cfb9d819dad4fe38fe9c51a7f3b6d6aebf36054bfffa75c8019eb57f
       description: Segment UUID to get regardless of votes
     requiredSegments:
       name: requiredSegments
