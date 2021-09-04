@@ -36,7 +36,8 @@ paths:
           description: Bad Request
         '403':
           description: Forbidden
-      security: []
+      security:
+        - privateAdminUserID: []
       description: |-
         Add user to VIP table.
 
@@ -362,7 +363,8 @@ paths:
           description: Not Found
       operationId: getViewsForUser
       description: Get number of views on all segments
-      security: []
+      security:
+        - privateUserID: []
     parameters: []
   /getTimeSavedForUser:
     get:
@@ -385,7 +387,8 @@ paths:
         '400':
           description: Bad Request
       operationId: get-getTimeSavedForUser
-      security: []
+      security:
+        - privateUserID: []
   /setUsername:
     parameters: []
     post:
@@ -432,7 +435,8 @@ paths:
                         properties: {}
                       - $ref: '#/components/schemas/publicUserID'
       operationId: getUsername
-      security: []
+      security:
+        - privateUserID: []
       description: Get current userName
   /segmentInfo:
     get:
@@ -919,7 +923,6 @@ paths:
           description: Should all previous submissions be banned as well
       tags:
         - vip
-        - admin
   /warnUser:
     post:
       summary: Warn User
@@ -1003,6 +1006,7 @@ components:
           description: start and end time in seconds
           items:
             type: number
+            example: 363.9582
             format: float
         UUID:
           $ref: '#/components/schemas/segmentUUID'
