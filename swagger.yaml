@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.0.0
 info:
   title: SponsorBlock API
   version: '1.0'
@@ -1097,8 +1097,8 @@ components:
             start and end time in seconds
           items:
             type: number
-            exclusiveMinimum: 2
-            exclusiveMaximum: 2
+            minimum: 2
+            maximum: 2
             format: float
         category:
           $ref: '#/components/schemas/category'
